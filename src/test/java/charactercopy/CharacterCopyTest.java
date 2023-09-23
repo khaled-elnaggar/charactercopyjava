@@ -13,14 +13,36 @@ public class CharacterCopyTest {
     StringBuilder destination = new StringBuilder();
 
     //Act
-    copyHelper(source, destination);
+    TestHelpers.copyHelper(source, destination);
 
     //Assert
     assertEquals(source, destination.toString());
   }
 
-  private static void copyHelper(String source, StringBuilder destination) {
-    Copier.copy(source, destination);
+  @Test
+  void whenSourceNoCharactersBeforeNewline_ThenDestinationHasNoCharacters() {
+    //Arrange
+    String source = "\n";
+    StringBuilder destination = new StringBuilder();
+
+    //Act
+    TestHelpers.copyHelper(source, destination);
+
+    //Assert
+    assertEquals("", destination.toString());
+  }
+
+  @Test
+  void whenSourceHasCharactersAfterNewline_ThenDestinationHasOnlyCharactersBeforeNewline() {
+    //Arrange
+    String source = "hello\nbye";
+    StringBuilder destination = new StringBuilder();
+
+    //Act
+    TestHelpers.copyHelper(source, destination);
+
+    //Assert
+    assertEquals("hello", destination.toString());
   }
 
 }
